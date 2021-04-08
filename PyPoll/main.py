@@ -26,3 +26,8 @@ with open(csvpath) as csvfile:
     for line in csvreader:
         # 1 Count The total number of months included in the dataset
             tot_votes = tot_votes + 1
+
+# Print All
+print("ELECTION RESULTS")
+print("--------------------")
+print("Total Votes: " + str(tot_votes))
