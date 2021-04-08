@@ -10,6 +10,8 @@ import csv
 
 # Variables
 tot_votes = 0
+candidate_list = []
+vote_count = []
 
 # Define the filepath
 # Could not do it as mentioned in class for some reason.
@@ -25,7 +27,17 @@ with open(csvpath) as csvfile:
 
     for line in csvreader:
         # 1 Count The total number of months included in the dataset
-            tot_votes = tot_votes + 1
+        tot_votes = tot_votes + 1
+
+        # Complete list of candidates
+        if line[2] not in candidate_list:
+            candidate_list.append(line[2])
+            # Place a one when first vote.
+            vote_count.append(1)  
+        else:
+            # When it is not the first vote, find the line and add one more vote.
+            vote_count[candidate_list.index(line[2])] = 1 + vote_count[candidate_list.index(line[2])]
+
 
 # Print All
 print("ELECTION RESULTS")
