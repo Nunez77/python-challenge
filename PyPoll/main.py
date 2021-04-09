@@ -32,12 +32,13 @@ with open(csvpath) as csvfile:
         # Complete list of candidates
         if line[2] not in candidate_list:
             candidate_list.append(line[2])
-            # Place a one when first vote.
+            # Place a 1 when the first vote is registered.
             vote_count.append(1)  
         else:
             # When it is not the first vote, find the line and add one more vote.
             vote_count[candidate_list.index(line[2])] = 1 + vote_count[candidate_list.index(line[2])]
 
+# Calculate percentages
 
 # Print All
 print("ELECTION RESULTS")
