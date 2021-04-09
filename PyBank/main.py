@@ -22,7 +22,7 @@ csvpath = os.path.join(dirname,'Resources', 'budget_data.csv')
 tot_num_mon = 0 # Total number of months
 prof_loss = 0 # Profit n Loss Summatory
 prof_loss_changes = 0
-inc_dec = 0 # Difference between lines
+inc_dec = 0 # Difference between lines, increase or decrease amounth by month
 change_per_month = []
 accum_changes = 0 # Adds up changes
 prev_row = 0
@@ -36,7 +36,7 @@ with open(csvpath) as csvfile:
 
     # CSV reader specifies delimiter and variable that holds contents
     csvreader = csv.reader(csvfile, delimiter=',')
-    next (csvreader)
+    next (csvreader)  # We skip the first line.
     
     for line in csvreader:
     # 1 Count The total number of months included in the dataset
@@ -48,6 +48,8 @@ with open(csvpath) as csvfile:
         inc_dec = int(line[1]) - prev_row  # Difference between lines
         prev_row = int(line[1]) # Acquires the current value for the next loop
         accum_changes = accum_changes + inc_dec  # Adding up the changes
+        change_per_month.append(inc_dec) # Create a changes list
+
     # The greatest increase in profits (date and amount) 
     # over the entire period
         if inc_dec > gr_inc:
@@ -58,6 +60,9 @@ with open(csvpath) as csvfile:
         elif inc_dec < gr_dec:
             gr_dec = inc_dec
             gr_dec_mo = line[0]
+
+    # Adjust acummulated changes by substracting the first value
+    accum_changes = accum_changes - change_per_month[0]
 
 # Print All
 print("FINANCIAL ANALYSIS")
