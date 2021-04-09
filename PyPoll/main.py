@@ -12,6 +12,9 @@ import csv
 tot_votes = 0
 candidate_list = []
 vote_count = []
+candidate_qty = 0
+candidate_perc = []
+winner = ""
 
 # Define the filepath
 # Could not do it as mentioned in class for some reason.
@@ -39,8 +42,46 @@ with open(csvpath) as csvfile:
             vote_count[candidate_list.index(line[2])] = 1 + vote_count[candidate_list.index(line[2])]
 
 # Calculate percentages
+candidate_qty = len(candidate_list)
+
+# Print all of the candies to the screen and their index in brackets
+for i in range(len(vote_count)):
+    candidate_perc.append(100*vote_count[i]/tot_votes)
+
+# Winner candidate
+max_votes = max(vote_count)
+max_v_ind = vote_count.index(max_votes)
+winner = candidate_list[max_v_ind]
 
 # Print All
 print("ELECTION RESULTS")
 print("--------------------")
 print("Total Votes: " + str(tot_votes))
+print("--------------------")
+
+# Print Results
+for t in range(candidate_qty):
+    print(candidate_list[t] + ": " + str(round(candidate_perc[t],3)) + "% (" + str(vote_count[t]) + ")")
+
+# Print Winner
+print("--------------------")
+print("Winner: " + winner)
+print("--------------------")
+
+# Print to text file
+txtpath = os.path.join(dirname,'Analysis', 'results.txt')
+with open(txtpath, 'w',) as txtfile:
+
+    txtfile.write("ELECTION RESULTS\n")
+    txtfile.write("--------------------\n")
+    txtfile.write("Total Votes: " + str(tot_votes) + "\n")
+    txtfile.write("--------------------\n")
+
+    # Print Results
+    for t in range(candidate_qty):
+        txtfile.write(candidate_list[t] + ": " + str(round(candidate_perc[t],3)) + "% (" + str(vote_count[t]) + ")\n")
+
+    # Print Winner
+    txtfile.write("--------------------\n")
+    txtfile.write("Winner: " + winner + "\n")
+    txtfile.write("--------------------\n")
